@@ -14,6 +14,6 @@ app.use("/api", ruta)
 
 testDB().then(()=>{
     app.listen(PORT, ()=>{
-        console.log(`servidor corriendo en el puero ${PORT}`)
+        console.log(`servidor corriendo en el puerto ${PORT}`)
     })
 });

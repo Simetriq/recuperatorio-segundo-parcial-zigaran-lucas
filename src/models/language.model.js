@@ -20,8 +20,8 @@ const model = sequelize.define(
       allowNull: false,
     },
         release_year: {
-      type: DataTypes.STRING,
-      allowNull: false,
+      type: DataTypes.INTEGER,
+      allowNull: true,
     }
   }
 )
