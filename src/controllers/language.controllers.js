@@ -1,5 +1,7 @@
 
+import { json, where } from "sequelize";
 import model from "../models/language.model.js";
+import { Where } from "sequelize/lib/utils";
 
 export const getAllPrograms = async (req, res)=>{
     try {
@@ -22,7 +24,14 @@ export const getProgramsById = async (req, res)=>{
     }
 }
 export const createPrograms = async (req, res)=>{
+        const {name, paradigm, release_year } = req.body
     try {
+        if(name===undefined || name === "") return res.status(400).json({message:" name es obligatorio"})
+        if(paradigm === undefined || paradigm === "") return res.status(400).json({message:"paradigma es obligatorio"})
+        if(!Number.isInteger(release_year)) return res.status(400).json({messag: "el año de lanzamiento debe ser un entero"})
+        if(release_year <= 0) return res.status(400).json({message: "el año debe ser mayor a 0"})
+        const buscador = await model.findOne(req.params,{where:{name:req.params.name}})
+        if(buscador) return res.status(400).json({message:"El ya nombre existe, el nombre debe ser unico"})
         const crear = await model.create(req.body)
         return res.status(201).json(crear);
     } catch (error) {
@@ -40,11 +49,22 @@ export const deleteProgram = async (req, res)=>{
     }
 }
 export const updateProgram = async (req, res)=>{
+        const {name, paradigm, release_year } = req.body
     try {
-        const [acutalizar] = await movieModel.update(req.body,{where:{id:req.params.id}})
-        if(actualizar){const siactualizo = await movieModel.findByPk(req.params.id)}
-        return res.status(200).json(siactualizo)
+
+        if(name===undefined || name === "") return res.status(400).json({message:" name es obligatorio"})
+        if(paradigm === undefined || paradigm === "") return res.status(400).json({message:"paradigma es obligatorio"})
+        if(!Number.isInteger(release_year)) return res.status(400).json({messag: "el año de lanzamiento debe ser un entero"})
+        if(release_year <= 0) return res.status(400).json({message: "el año debe ser mayor a 0"})
+        const buscador = await model.findOne(req.params,{where:{name:req.params.name}})
+        if(buscador) return res.status(400).json({message:"El ya nombre existe, el nombre debe ser unico"})
+
+        const [actualizar] = await model.update(req.body,{where:{id: req.params.id}})
+        if (actualizar) {const encontro = await model.findByPk(req.params.id)} return res.status(200).json(encontro)
+
     } catch (error) {
+
         return res.status(400).json({message:"Error al tratar de actualizar un lenguaje"})
+
     }
 }
