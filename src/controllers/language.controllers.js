@@ -1,7 +1,7 @@
-import { json } from "sequelize";
+
 import model from "../models/language.model.js";
 
-export const getAllPrograms = async ()=>{
+export const getAllPrograms = async (req, res)=>{
     try {
 
         const traerTodo = await model.findAll()
@@ -11,7 +11,7 @@ export const getAllPrograms = async ()=>{
         return res.status(400).json({message:"Error al tratar de traer todos los lenguajes"})
     }
 }
-export const getProgramsById = async ()=>{
+export const getProgramsById = async (req, res)=>{
     try {
 
         const traerId = await model.findByPk(req.params.id)
@@ -21,7 +21,7 @@ export const getProgramsById = async ()=>{
         return res.status(400).json({message:"Error al tratar de traer de buscar por ID el lenguaje"})
     }
 }
-export const createPrograms = async ()=>{
+export const createPrograms = async (req, res)=>{
     try {
         const crear = await model.create(req.body)
         return res.status(201).json(crear);
@@ -29,7 +29,7 @@ export const createPrograms = async ()=>{
         return res.status(400).json({message:"Error al tratar de crear un lenguaje"})
     }
 }
-export const deleteProgram = async ()=>{
+export const deleteProgram = async (req, res)=>{
     try {
         
         const borrar = await model.destroy({where:{id: req.params.id}})
@@ -39,7 +39,7 @@ export const deleteProgram = async ()=>{
         return res.status(400).json({message:"Error al tratar de borrar un lenguaje"})
     }
 }
-export const updateProgram = async ()=>{
+export const updateProgram = async (req, res)=>{
     try {
         const [acutalizar] = await movieModel.update(req.body,{where:{id:req.params.id}})
         if(actualizar){const siactualizo = await movieModel.findByPk(req.params.id)}
