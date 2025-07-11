@@ -1,8 +1,8 @@
 import sequelize from "../config/database.js";
 import { DataTypes } from 'sequelize';
 
-const model = sequelize.define(
-  'model',
+const programingLanguage = sequelize.define(
+  'programingLanguage',
   {
     
     id: {
@@ -26,4 +26,4 @@ const model = sequelize.define(
   }
 )
 
-export default model;
+export default programingLanguage;
